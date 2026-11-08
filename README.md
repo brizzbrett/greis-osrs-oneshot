@@ -17,7 +17,7 @@ The sheet covers:
 - Weapon attacks and specials, the spellbook with rune costs, and prayers
 - Potions, food, shops, life skills, saves and checks, and a dice roller
 - A searchable rulebook with the text of all of Grei's rule PDFs, plus an FAQ for questions the PDFs don't answer
-- Page colours: each class has its own (Warrior red, Ranger green, Wizard blue, Priest gold), or pick another from the Colour menu, plus light or dark
+- God themes: each class follows its god (Warrior Bandos, Ranger Armadyl, Wizard Zaros, Priest Saradomin), with the god's colours and symbol on the page. Pick another god (Zamorak, Guthix, Seren and the rest) from the Theme menu, plus light or dark
 
 ## Playing together
 
@@ -49,5 +49,7 @@ To keep your character safe or move it, use **Download backup** (under Notes), t
 ## Credits
 
 Game and rules by Grei. Sheet built for the playtest.
+
+God symbols from the [Old School RuneScape Wiki](https://oldschool.runescape.wiki/), © Jagex.
 
 Fan-made and not affiliated with Jagex or RuneScape.

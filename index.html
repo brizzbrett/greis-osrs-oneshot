@@ -88,30 +88,17 @@
   --good: #74c983;
 }
 
-/* Colour themes (players pick one; the default follows their class). Each has a light and a dark version. */
-:root[data-color="green"] {
-  --paper: #e7eee6;
-  --panel: #f7faf6;
-  --ink: #16271a;
-  --muted: #4f6154;
-  --line: #cbd9cb;
-  --robe: #2c6636;
-  --robe-ink: #ffffff;
-  --robe-soft: #d9e9d9;
-  --track: #dbe5da;
+/* God themes (players pick one; the default is their class's god). Each has a light and a dark version, and the god's symbol sits faintly behind the page. Symbols from the Old School RuneScape Wiki, (c) Jagex. */
+:root {
+  --sym-saradomin: url("gods/saradomin.png");
+  --sym-zamorak: url("gods/zamorak.png");
+  --sym-guthix: url("gods/guthix.png");
+  --sym-armadyl: url("gods/armadyl.png");
+  --sym-bandos: url("gods/bandos.png");
+  --sym-zaros: url("gods/zaros.png");
+  --sym-seren: url("gods/seren.png");
 }
-:root[data-color="red"] {
-  --paper: #f1e9e7;
-  --panel: #fcf8f7;
-  --ink: #2a1918;
-  --muted: #664f4c;
-  --line: #e0cfcc;
-  --robe: #9e2f28;
-  --robe-ink: #ffffff;
-  --robe-soft: #f4dcd9;
-  --track: #eadfdd;
-}
-:root[data-color="gold"] {
+:root[data-color="saradomin"] {
   --paper: #f0ece1;
   --panel: #fcfaf4;
   --ink: #29230f;
@@ -121,8 +108,57 @@
   --robe-ink: #ffffff;
   --robe-soft: #f0e5c7;
   --track: #e7e0cd;
+  --sym: var(--sym-saradomin);
 }
-:root[data-color="purple"] {
+:root[data-color="zamorak"] {
+  --paper: #f1e9e7;
+  --panel: #fcf8f7;
+  --ink: #2a1918;
+  --muted: #664f4c;
+  --line: #e0cfcc;
+  --robe: #9e2f28;
+  --robe-ink: #ffffff;
+  --robe-soft: #f4dcd9;
+  --track: #eadfdd;
+  --sym: var(--sym-zamorak);
+}
+:root[data-color="guthix"] {
+  --paper: #e7eee6;
+  --panel: #f7faf6;
+  --ink: #16271a;
+  --muted: #4f6154;
+  --line: #cbd9cb;
+  --robe: #2c6636;
+  --robe-ink: #ffffff;
+  --robe-soft: #d9e9d9;
+  --track: #dbe5da;
+  --sym: var(--sym-guthix);
+}
+:root[data-color="armadyl"] {
+  --paper: #e7eef7;
+  --panel: #f7fafd;
+  --ink: #142238;
+  --muted: #4f5f75;
+  --line: #cbd8e8;
+  --robe: #1f5bb5;
+  --robe-ink: #ffffff;
+  --robe-soft: #d9e6f7;
+  --track: #dce5f0;
+  --sym: var(--sym-armadyl);
+}
+:root[data-color="bandos"] {
+  --paper: #efe9e2;
+  --panel: #fbf8f4;
+  --ink: #2a1f16;
+  --muted: #66574a;
+  --line: #ddd0c2;
+  --robe: #7a4b24;
+  --robe-ink: #ffffff;
+  --robe-soft: #f0e2d3;
+  --track: #e8ddd1;
+  --sym: var(--sym-bandos);
+}
+:root[data-color="zaros"] {
   --paper: #ebe8f2;
   --panel: #f9f8fc;
   --ink: #201933;
@@ -132,42 +168,22 @@
   --robe-ink: #ffffff;
   --robe-soft: #e5dbf5;
   --track: #e0dbeb;
+  --sym: var(--sym-zaros);
 }
-:root[data-color="slate"] {
-  --paper: #eaecef;
-  --panel: #fafbfc;
-  --ink: #1b2027;
-  --muted: #575f6a;
-  --line: #d3d7dd;
-  --robe: #3a4757;
+:root[data-color="seren"] {
+  --paper: #e5f0f1;
+  --panel: #f6fbfb;
+  --ink: #10272a;
+  --muted: #4b6266;
+  --line: #c6dcde;
+  --robe: #0b6a75;
   --robe-ink: #ffffff;
-  --robe-soft: #dfe3e9;
-  --track: #e0e3e8;
+  --robe-soft: #d3eaec;
+  --track: #d8e6e8;
+  --sym: var(--sym-seren);
 }
 @media (prefers-color-scheme: dark) {
-  :root[data-color="green"]:not([data-theme="light"]) {
-    --paper: #0d1510;
-    --panel: #152019;
-    --ink: #e2ede4;
-    --muted: #97ab9b;
-    --line: #283a2e;
-    --robe: #7ccb8c;
-    --robe-ink: #0d1510;
-    --robe-soft: #1e3326;
-    --track: #21302a;
-  }
-  :root[data-color="red"]:not([data-theme="light"]) {
-    --paper: #190f0f;
-    --panel: #231616;
-    --ink: #f2e5e3;
-    --muted: #b8a19e;
-    --line: #3d2928;
-    --robe: #f28c82;
-    --robe-ink: #190f0f;
-    --robe-soft: #3b211f;
-    --track: #322221;
-  }
-  :root[data-color="gold"]:not([data-theme="light"]) {
+  :root[data-color="saradomin"]:not([data-theme="light"]) {
     --paper: #15120a;
     --panel: #201b10;
     --ink: #f1ebda;
@@ -178,7 +194,51 @@
     --robe-soft: #383017;
     --track: #2e2817;
   }
-  :root[data-color="purple"]:not([data-theme="light"]) {
+  :root[data-color="zamorak"]:not([data-theme="light"]) {
+    --paper: #190f0f;
+    --panel: #231616;
+    --ink: #f2e5e3;
+    --muted: #b8a19e;
+    --line: #3d2928;
+    --robe: #f28c82;
+    --robe-ink: #190f0f;
+    --robe-soft: #3b211f;
+    --track: #322221;
+  }
+  :root[data-color="guthix"]:not([data-theme="light"]) {
+    --paper: #0d1510;
+    --panel: #152019;
+    --ink: #e2ede4;
+    --muted: #97ab9b;
+    --line: #283a2e;
+    --robe: #7ccb8c;
+    --robe-ink: #0d1510;
+    --robe-soft: #1e3326;
+    --track: #21302a;
+  }
+  :root[data-color="armadyl"]:not([data-theme="light"]) {
+    --paper: #0d1420;
+    --panel: #151e2d;
+    --ink: #e2eaf5;
+    --muted: #95a5bb;
+    --line: #283750;
+    --robe: #6fa8f5;
+    --robe-ink: #0d1420;
+    --robe-soft: #1d2e4a;
+    --track: #222f44;
+  }
+  :root[data-color="bandos"]:not([data-theme="light"]) {
+    --paper: #17110c;
+    --panel: #211913;
+    --ink: #f0e7de;
+    --muted: #b3a291;
+    --line: #3b2e23;
+    --robe: #d9a06a;
+    --robe-ink: #17110c;
+    --robe-soft: #3a2a1c;
+    --track: #30251c;
+  }
+  :root[data-color="zaros"]:not([data-theme="light"]) {
     --paper: #120e1c;
     --panel: #1b1628;
     --ink: #ece6f6;
@@ -189,41 +249,19 @@
     --robe-soft: #2b2143;
     --track: #272037;
   }
-  :root[data-color="slate"]:not([data-theme="light"]) {
-    --paper: #111316;
-    --panel: #1a1d21;
-    --ink: #e6e8eb;
-    --muted: #9fa5ad;
-    --line: #2e3238;
-    --robe: #aab7c9;
-    --robe-ink: #111316;
-    --robe-soft: #293038;
-    --track: #252a30;
+  :root[data-color="seren"]:not([data-theme="light"]) {
+    --paper: #0b1517;
+    --panel: #121f22;
+    --ink: #ddf1f3;
+    --muted: #8fb0b4;
+    --line: #233a3e;
+    --robe: #5fd6e3;
+    --robe-ink: #0b1517;
+    --robe-soft: #17363b;
+    --track: #1d3034;
   }
 }
-:root[data-color="green"][data-theme="dark"] {
-  --paper: #0d1510;
-  --panel: #152019;
-  --ink: #e2ede4;
-  --muted: #97ab9b;
-  --line: #283a2e;
-  --robe: #7ccb8c;
-  --robe-ink: #0d1510;
-  --robe-soft: #1e3326;
-  --track: #21302a;
-}
-:root[data-color="red"][data-theme="dark"] {
-  --paper: #190f0f;
-  --panel: #231616;
-  --ink: #f2e5e3;
-  --muted: #b8a19e;
-  --line: #3d2928;
-  --robe: #f28c82;
-  --robe-ink: #190f0f;
-  --robe-soft: #3b211f;
-  --track: #322221;
-}
-:root[data-color="gold"][data-theme="dark"] {
+:root[data-color="saradomin"][data-theme="dark"] {
   --paper: #15120a;
   --panel: #201b10;
   --ink: #f1ebda;
@@ -234,7 +272,51 @@
   --robe-soft: #383017;
   --track: #2e2817;
 }
-:root[data-color="purple"][data-theme="dark"] {
+:root[data-color="zamorak"][data-theme="dark"] {
+  --paper: #190f0f;
+  --panel: #231616;
+  --ink: #f2e5e3;
+  --muted: #b8a19e;
+  --line: #3d2928;
+  --robe: #f28c82;
+  --robe-ink: #190f0f;
+  --robe-soft: #3b211f;
+  --track: #322221;
+}
+:root[data-color="guthix"][data-theme="dark"] {
+  --paper: #0d1510;
+  --panel: #152019;
+  --ink: #e2ede4;
+  --muted: #97ab9b;
+  --line: #283a2e;
+  --robe: #7ccb8c;
+  --robe-ink: #0d1510;
+  --robe-soft: #1e3326;
+  --track: #21302a;
+}
+:root[data-color="armadyl"][data-theme="dark"] {
+  --paper: #0d1420;
+  --panel: #151e2d;
+  --ink: #e2eaf5;
+  --muted: #95a5bb;
+  --line: #283750;
+  --robe: #6fa8f5;
+  --robe-ink: #0d1420;
+  --robe-soft: #1d2e4a;
+  --track: #222f44;
+}
+:root[data-color="bandos"][data-theme="dark"] {
+  --paper: #17110c;
+  --panel: #211913;
+  --ink: #f0e7de;
+  --muted: #b3a291;
+  --line: #3b2e23;
+  --robe: #d9a06a;
+  --robe-ink: #17110c;
+  --robe-soft: #3a2a1c;
+  --track: #30251c;
+}
+:root[data-color="zaros"][data-theme="dark"] {
   --paper: #120e1c;
   --panel: #1b1628;
   --ink: #ece6f6;
@@ -245,17 +327,34 @@
   --robe-soft: #2b2143;
   --track: #272037;
 }
-:root[data-color="slate"][data-theme="dark"] {
-  --paper: #111316;
-  --panel: #1a1d21;
-  --ink: #e6e8eb;
-  --muted: #9fa5ad;
-  --line: #2e3238;
-  --robe: #aab7c9;
-  --robe-ink: #111316;
-  --robe-soft: #293038;
-  --track: #252a30;
+:root[data-color="seren"][data-theme="dark"] {
+  --paper: #0b1517;
+  --panel: #121f22;
+  --ink: #ddf1f3;
+  --muted: #8fb0b4;
+  --line: #233a3e;
+  --robe: #5fd6e3;
+  --robe-ink: #0b1517;
+  --robe-soft: #17363b;
+  --track: #1d3034;
 }
+body::after {
+  content: ""; position: fixed; z-index: -1; pointer-events: none;
+  right: max(2vmin, env(safe-area-inset-right, 0px)); bottom: max(2vmin, env(safe-area-inset-bottom, 0px));
+  width: min(40vmin, 320px); aspect-ratio: 1;
+  background: var(--sym, none) right bottom / contain no-repeat; opacity: 0.12;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) body::after { opacity: 0.16; } }
+:root[data-theme="dark"] body::after { opacity: 0.16; }
+/* The same symbol, small and faint, at the right end of the top bar so it's always in view */
+.bar::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  right: max(16px, env(safe-area-inset-right, 0px)); top: 6px; bottom: 6px; width: min(150px, 30vw);
+  background: var(--sym, none) right center / contain no-repeat; opacity: 0.2;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bar::before { opacity: 0.26; } }
+:root[data-theme="dark"] .bar::before { opacity: 0.26; }
+.god-sym { display: inline-block; width: 1.3em; height: 1.3em; vertical-align: -0.3em; background: center / contain no-repeat; }
 
 
 * { box-sizing: border-box; }
@@ -989,24 +1088,27 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
 
   /* ---------- Page colours: each player picks their own; by default it follows their class ---------- */
   const COLOR_KEY = "greis-color", MODE_KEY = "greis-mode";
-  const CLASS_COLOR = { warrior: "red", ranger: "green", wizard: "blue", priest: "gold" };
-  const COLOR_OPTS = [["blue", "Blue"], ["green", "Green"], ["red", "Red"], ["gold", "Gold"], ["purple", "Purple"], ["slate", "Slate"]];
+  const CLASS_COLOR = { warrior: "bandos", ranger: "armadyl", wizard: "zaros", priest: "saradomin" };
+  const COLOR_OPTS = [["saradomin", "Saradomin"], ["zamorak", "Zamorak"], ["guthix", "Guthix"], ["armadyl", "Armadyl"], ["bandos", "Bandos"], ["zaros", "Zaros"], ["seren", "Seren"]];
+  const OLD_COLORS = { blue: "armadyl", green: "guthix", red: "zamorak", gold: "saradomin", purple: "zaros", slate: "" };
   const readPref = k => { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } };
   const writePref = (k, v) => { try { if (v) localStorage.setItem(k, v); else localStorage.removeItem(k); } catch (e) {} };
-  const classColor = () => (typeof net !== "undefined" && net.role === "dm" ? "blue" : CLASS_COLOR[(typeof state !== "undefined" && state && state.cls) || ""] || "blue");
+  // The DM gets Guthix, god of balance; players get their class's god
+  const classColor = () => (typeof net !== "undefined" && net.role === "dm" ? "guthix" : CLASS_COLOR[(typeof state !== "undefined" && state && state.cls) || ""] || "guthix");
+  const savedColor = () => { const v = readPref(COLOR_KEY); return v in OLD_COLORS ? OLD_COLORS[v] : v; };
   function applyTheme() {
-    const pick = readPref(COLOR_KEY), c = pick && pick !== "class" ? pick : classColor();
+    const pick = savedColor(), c = pick && pick !== "class" ? pick : classColor();
+    document.documentElement.dataset.color = c;
     const root = document.documentElement;
-    if (c === "blue") delete root.dataset.color; else root.dataset.color = c;
     // Light or dark: only off Claude, where nothing else sets it
     if (STANDALONE) { const m = readPref(MODE_KEY); if (m === "light" || m === "dark") root.dataset.theme = m; else delete root.dataset.theme; }
   }
   function themePicker() {
-    const pick = readPref(COLOR_KEY) || "class", cc = classColor();
-    const ccName = (COLOR_OPTS.find(o => o[0] === cc) || ["", "Blue"])[1];
-    const colour = `<select id="u-color" data-pref="${COLOR_KEY}" class="btn tiny" aria-label="Page colour">
-      <option value="class"${pick === "class" ? " selected" : ""}>Colour: class (${ccName})</option>
-      ${COLOR_OPTS.map(([v, l]) => `<option value="${v}"${pick === v ? " selected" : ""}>Colour: ${l}</option>`).join("")}</select>`;
+    const pick = savedColor() || "class", cc = classColor();
+    const ccName = (COLOR_OPTS.find(o => o[0] === cc) || ["", "Guthix"])[1];
+    const colour = `<select id="u-color" data-pref="${COLOR_KEY}" class="btn tiny" aria-label="Page colours and symbol">
+      <option value="class"${pick === "class" ? " selected" : ""}>Theme: ${ccName} (${typeof net !== "undefined" && net.role === "dm" ? "DM" : "class"} god)</option>
+      ${COLOR_OPTS.map(([v, l]) => `<option value="${v}"${pick === v ? " selected" : ""}>Theme: ${l}</option>`).join("")}</select>`;
     if (!STANDALONE) return colour;
     const m = readPref(MODE_KEY) || "auto";
     return colour + `<select id="u-mode" data-pref="${MODE_KEY}" class="btn tiny" aria-label="Light or dark">
@@ -1715,6 +1817,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
       const w = weaponInfo(c.weapon), sp = SPECIALS[w.type];
       return `<article class="pick">
         <h2>${c.name}</h2>
+        <p class="small muted"><span class="god-sym" style="background-image:var(--sym-${CLASS_COLOR[k]})" aria-hidden="true"></span> Follows ${(COLOR_OPTS.find(o => o[0] === CLASS_COLOR[k]) || ["", ""])[1]}</p>
         <p class="muted">${c.blurb}</p>
         <div class="cls-stats">${st}</div>
         <p class="small"><b>AC</b> <span class="num">${ac.join(" / ")}</span> <span class="muted">melee / ranged / magic</span></p>
