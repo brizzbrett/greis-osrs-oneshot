@@ -1,0 +1,19 @@
+# Notes for Claude and personal settings stay on this computer
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+
+# Character backups downloaded while testing
+*-warrior.json
+*-ranger.json
+*-wizard.json
+*-priest.json
+
+# OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Grei's monster stats are for the DM only, so they stay off the public site.
+# The DM loads them with "Load Grei's monsters" and picks this file.
+monsters.json
