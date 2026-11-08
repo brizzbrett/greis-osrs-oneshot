@@ -49,6 +49,11 @@ const api = {
     return (await get(ref(db, `rooms/${c}/meta`))).exists();
   },
 
+  // True if the DM removed this browser from the room. Older rules can't answer, so treat that as not removed.
+  async isKicked(c) {
+    try { return (await get(ref(db, `rooms/${c}/kicked/${uid}`))).exists(); } catch (e) { return false; }
+  },
+
   async createRoom() {
     for (let i = 0; i < 10; i++) {
       const c = "GREI-" + String(1000 + Math.floor(Math.random() * 9000));
@@ -70,6 +75,17 @@ const api = {
     watch(roomRef("enemies"), v => h.enemies(v));
     watch(roomRef(`buffs/${uid}`), v => h.buffs(v));
     if (h.dm) watch(roomRef("dm"), v => h.dm(v));
+    if (h.kickedList) watch(roomRef("kicked"), v => h.kickedList(v));
+    if (h.kicked) unsubs.push(onValue(roomRef(`kicked/${uid}`), s => h.kicked(s.exists()), () => {}));
+  },
+
+  // DM: take a player out of the room and keep them out (the rules stop them writing anything)
+  kick(id, name) { return update(roomRef(), { [`kicked/${id}`]: { name: name || "", at: serverTimestamp() }, [`players/${id}`]: null, [`buffs/${id}`]: null }); },
+  unkick(id) { return set(roomRef(`kicked/${id}`), null); },
+  // Stop the "went offline" write that would otherwise recreate a removed player's entry
+  dropPresence() {
+    if (code && uid) onDisconnect(roomRef(`players/${uid}/online`)).cancel().catch(() => {});
+    presenceSet = false;
   },
 
   close() {

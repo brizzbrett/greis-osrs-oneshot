@@ -88,6 +88,176 @@
   --good: #74c983;
 }
 
+/* Colour themes (players pick one; the default follows their class). Each has a light and a dark version. */
+:root[data-color="green"] {
+  --paper: #e7eee6;
+  --panel: #f7faf6;
+  --ink: #16271a;
+  --muted: #4f6154;
+  --line: #cbd9cb;
+  --robe: #2c6636;
+  --robe-ink: #ffffff;
+  --robe-soft: #d9e9d9;
+  --track: #dbe5da;
+}
+:root[data-color="red"] {
+  --paper: #f1e9e7;
+  --panel: #fcf8f7;
+  --ink: #2a1918;
+  --muted: #664f4c;
+  --line: #e0cfcc;
+  --robe: #9e2f28;
+  --robe-ink: #ffffff;
+  --robe-soft: #f4dcd9;
+  --track: #eadfdd;
+}
+:root[data-color="gold"] {
+  --paper: #f0ece1;
+  --panel: #fcfaf4;
+  --ink: #29230f;
+  --muted: #62583f;
+  --line: #ded5bf;
+  --robe: #7e5c0e;
+  --robe-ink: #ffffff;
+  --robe-soft: #f0e5c7;
+  --track: #e7e0cd;
+}
+:root[data-color="purple"] {
+  --paper: #ebe8f2;
+  --panel: #f9f8fc;
+  --ink: #201933;
+  --muted: #5b5470;
+  --line: #d6cfe5;
+  --robe: #633a99;
+  --robe-ink: #ffffff;
+  --robe-soft: #e5dbf5;
+  --track: #e0dbeb;
+}
+:root[data-color="slate"] {
+  --paper: #eaecef;
+  --panel: #fafbfc;
+  --ink: #1b2027;
+  --muted: #575f6a;
+  --line: #d3d7dd;
+  --robe: #3a4757;
+  --robe-ink: #ffffff;
+  --robe-soft: #dfe3e9;
+  --track: #e0e3e8;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-color="green"]:not([data-theme="light"]) {
+    --paper: #0d1510;
+    --panel: #152019;
+    --ink: #e2ede4;
+    --muted: #97ab9b;
+    --line: #283a2e;
+    --robe: #7ccb8c;
+    --robe-ink: #0d1510;
+    --robe-soft: #1e3326;
+    --track: #21302a;
+  }
+  :root[data-color="red"]:not([data-theme="light"]) {
+    --paper: #190f0f;
+    --panel: #231616;
+    --ink: #f2e5e3;
+    --muted: #b8a19e;
+    --line: #3d2928;
+    --robe: #f28c82;
+    --robe-ink: #190f0f;
+    --robe-soft: #3b211f;
+    --track: #322221;
+  }
+  :root[data-color="gold"]:not([data-theme="light"]) {
+    --paper: #15120a;
+    --panel: #201b10;
+    --ink: #f1ebda;
+    --muted: #b2a88c;
+    --line: #3a321f;
+    --robe: #e9c45d;
+    --robe-ink: #15120a;
+    --robe-soft: #383017;
+    --track: #2e2817;
+  }
+  :root[data-color="purple"]:not([data-theme="light"]) {
+    --paper: #120e1c;
+    --panel: #1b1628;
+    --ink: #ece6f6;
+    --muted: #a69fba;
+    --line: #322a45;
+    --robe: #b998ee;
+    --robe-ink: #120e1c;
+    --robe-soft: #2b2143;
+    --track: #272037;
+  }
+  :root[data-color="slate"]:not([data-theme="light"]) {
+    --paper: #111316;
+    --panel: #1a1d21;
+    --ink: #e6e8eb;
+    --muted: #9fa5ad;
+    --line: #2e3238;
+    --robe: #aab7c9;
+    --robe-ink: #111316;
+    --robe-soft: #293038;
+    --track: #252a30;
+  }
+}
+:root[data-color="green"][data-theme="dark"] {
+  --paper: #0d1510;
+  --panel: #152019;
+  --ink: #e2ede4;
+  --muted: #97ab9b;
+  --line: #283a2e;
+  --robe: #7ccb8c;
+  --robe-ink: #0d1510;
+  --robe-soft: #1e3326;
+  --track: #21302a;
+}
+:root[data-color="red"][data-theme="dark"] {
+  --paper: #190f0f;
+  --panel: #231616;
+  --ink: #f2e5e3;
+  --muted: #b8a19e;
+  --line: #3d2928;
+  --robe: #f28c82;
+  --robe-ink: #190f0f;
+  --robe-soft: #3b211f;
+  --track: #322221;
+}
+:root[data-color="gold"][data-theme="dark"] {
+  --paper: #15120a;
+  --panel: #201b10;
+  --ink: #f1ebda;
+  --muted: #b2a88c;
+  --line: #3a321f;
+  --robe: #e9c45d;
+  --robe-ink: #15120a;
+  --robe-soft: #383017;
+  --track: #2e2817;
+}
+:root[data-color="purple"][data-theme="dark"] {
+  --paper: #120e1c;
+  --panel: #1b1628;
+  --ink: #ece6f6;
+  --muted: #a69fba;
+  --line: #322a45;
+  --robe: #b998ee;
+  --robe-ink: #120e1c;
+  --robe-soft: #2b2143;
+  --track: #272037;
+}
+:root[data-color="slate"][data-theme="dark"] {
+  --paper: #111316;
+  --panel: #1a1d21;
+  --ink: #e6e8eb;
+  --muted: #9fa5ad;
+  --line: #2e3238;
+  --robe: #aab7c9;
+  --robe-ink: #111316;
+  --robe-soft: #293038;
+  --track: #252a30;
+}
+
+
 * { box-sizing: border-box; }
 body {
   background: var(--paper);
@@ -474,6 +644,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
 .act-edit textarea { width: 100%; resize: vertical; min-height: 0; height: auto; }
 .enemy.editing { grid-column: 1 / -1; }
 .stat-boxes label { display: inline-flex; align-items: center; gap: 4px; }
+.kicked-list { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
 .en-more { font-size: 0.8rem; }
 .en-more .sb-row { list-style: none; margin-left: -1.1em; display: flex; align-items: center; gap: 8px; }
 .sb-dialog { padding: 0; border: 1px solid var(--line); border-radius: 8px; max-width: min(96vw, 960px); width: fit-content; min-width: min(96vw, 320px); background: var(--panel); color: inherit; }
@@ -816,6 +987,32 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
   // Outside the Claude viewer (e.g. GitHub Pages) there's no account storage: saves live in the browser, so offer backup files
   const STANDALONE = !(window.claude && typeof window.claude.use === "function");
 
+  /* ---------- Page colours: each player picks their own; by default it follows their class ---------- */
+  const COLOR_KEY = "greis-color", MODE_KEY = "greis-mode";
+  const CLASS_COLOR = { warrior: "red", ranger: "green", wizard: "blue", priest: "gold" };
+  const COLOR_OPTS = [["blue", "Blue"], ["green", "Green"], ["red", "Red"], ["gold", "Gold"], ["purple", "Purple"], ["slate", "Slate"]];
+  const readPref = k => { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } };
+  const writePref = (k, v) => { try { if (v) localStorage.setItem(k, v); else localStorage.removeItem(k); } catch (e) {} };
+  const classColor = () => (typeof net !== "undefined" && net.role === "dm" ? "blue" : CLASS_COLOR[(typeof state !== "undefined" && state && state.cls) || ""] || "blue");
+  function applyTheme() {
+    const pick = readPref(COLOR_KEY), c = pick && pick !== "class" ? pick : classColor();
+    const root = document.documentElement;
+    if (c === "blue") delete root.dataset.color; else root.dataset.color = c;
+    // Light or dark: only off Claude, where nothing else sets it
+    if (STANDALONE) { const m = readPref(MODE_KEY); if (m === "light" || m === "dark") root.dataset.theme = m; else delete root.dataset.theme; }
+  }
+  function themePicker() {
+    const pick = readPref(COLOR_KEY) || "class", cc = classColor();
+    const ccName = (COLOR_OPTS.find(o => o[0] === cc) || ["", "Blue"])[1];
+    const colour = `<select id="u-color" data-pref="${COLOR_KEY}" class="btn tiny" aria-label="Page colour">
+      <option value="class"${pick === "class" ? " selected" : ""}>Colour: class (${ccName})</option>
+      ${COLOR_OPTS.map(([v, l]) => `<option value="${v}"${pick === v ? " selected" : ""}>Colour: ${l}</option>`).join("")}</select>`;
+    if (!STANDALONE) return colour;
+    const m = readPref(MODE_KEY) || "auto";
+    return colour + `<select id="u-mode" data-pref="${MODE_KEY}" class="btn tiny" aria-label="Light or dark">
+      ${[["auto", "Auto"], ["light", "Light"], ["dark", "Dark"]].map(([v, l]) => `<option value="${v}"${m === v ? " selected" : ""}>${v === "auto" ? "Light/dark: auto" : l}</option>`).join("")}</select>`;
+  }
+
   /* ================= Live sessions (Firebase via net.js) ================= */
   const ROOM_KEY = "greis-room";
   const net = {
@@ -846,7 +1043,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
   const vsTarget = () => { const t = targetEnemy(); return t ? ` vs ${t.name}` : ""; };
   // Prayers a priest is keeping up on this player
   const buffPrayers = () => inRoom()
-    ? Object.values(net.buffs || {}).flatMap(b => (b && b.prayers ? Object.values(b.prayers) : []).map(n => ({ n, from: (b && b.fromName) || "an ally" })))
+    ? Object.values(net.buffs || {}).filter(b => b && (!b.from || (net.players || {})[b.from])).flatMap(b => (b && b.prayers ? Object.values(b.prayers) : []).map(n => ({ n, from: (b && b.fromName) || "an ally" })))
     : [];
   const hasPrayer = n => state.prayersOn.includes(n) || buffPrayers().some(x => x.n === n);
   function entryName(e) {
@@ -907,7 +1104,8 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     let ok = false;
     try { ok = await net.api.exists(code); } catch (e) { toast("Couldn't reach the session server"); render(); return; }
     if (!ok) { toast(`There's no session called ${code}`); if (quiet) clearRoom(); render(); return; }
-    Object.assign(net, { code, role, meta: null, players: {}, log: [], enemies: {}, dm: {}, buffs: {}, lastPub: "", lastTurnId: null });
+    if (role !== "dm" && await net.api.isKicked(code)) { toast(`The DM removed you from ${code}`); clearRoom(); render(); return; }
+    Object.assign(net, { code, role, meta: null, players: {}, log: [], enemies: {}, dm: {}, buffs: {}, kicked: {}, lastPub: "", lastTurnId: null });
     saveRoom();
     net.api.open(code, {
       meta: v => {
@@ -929,11 +1127,23 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
       enemies: v => { net.enemies = v || {}; if (ui.target && !net.enemies[ui.target]) ui.target = ""; scheduleRender(); },
       buffs: v => { net.buffs = v || {}; scheduleRender(); },
       dm: role === "dm" ? v => { net.dm = v || {}; scheduleRender(); } : null,
+      kickedList: role === "dm" ? v => { net.kicked = v || {}; scheduleRender(); } : null,
+      kicked: role !== "dm" ? gone => { if (gone && net.code === code) kickedOut(); } : null,
       error: () => {}
     });
     if (role === "player") publishNow();
     if (!quiet) toast(role === "dm" ? `Session ${code} is open. Share the code with your players.` : `Joined ${code}`);
     ui.sessOpen = false;
+    render();
+  }
+  function kickedOut() {
+    const code = net.code;
+    net.api.dropPresence();
+    net.api.close();
+    Object.assign(net, { code: null, role: null, meta: null, players: {}, log: [], enemies: {}, dm: {}, buffs: {}, kicked: {}, lastPub: "" });
+    clearRoom();
+    ui.sessOpen = false; ui.target = "";
+    toast(`The DM removed you from ${code}`);
     render();
   }
   function leaveRoom() {
@@ -1570,6 +1780,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
         ${btn("rest-menu", null, ui.restOpen ? "Close rest" : "Long rest", ui.restOpen ? "primary" : "", false, ` aria-expanded="${ui.restOpen}"`)}
         ${btn("refill-pp", null, "Pray at altar")}
         ${btn("rules", null, "Rulebook")}
+        ${themePicker()}
         ${net.api ? btn("session", null, inRoom() ? `Room ${esc(net.code)}` : "Play together", inRoom() ? "primary" : "", false, ` aria-expanded="${ui.sessOpen}"`) : ""}
       </div>
       <span class="status" id="status" data-s="${status.s}">${esc(status.text)}</span>
@@ -2122,7 +2333,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
   }
 
   function renderPartyBlock() {
-    const ps = Object.entries(net.players).filter(([, p]) => p).sort((a, b) => String(a[1].name).localeCompare(String(b[1].name)));
+    const ps = Object.entries(net.players).filter(([id, p]) => p && p.cls && !(net.kicked || {})[id]).sort((a, b) => String(a[1].name).localeCompare(String(b[1].name)));
     const cards = ps.map(([id, p]) => {
       const ac = p.ac || {}, dth = p.death || {};
       let st = "";
@@ -2132,10 +2343,13 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
         ${mbar("HP", p.hp | 0, p.hpMax | 0, "hp")}${mbar("Prayer", p.pp | 0, p.ppMax | 0, "pray")}${mbar("Special", p.spec | 0, 100, "spec")}
         <div class="small muted">AC <span class="num">${ac.melee}/${ac.ranged}/${ac.magic}</span> · ${p.speed} ft${p.exh ? ` · exhaustion ${p.exh}` : ""}${p.init !== null && p.init !== undefined ? ` · init ${p.init}` : ""}</div>
         ${p.prayers ? `<div class="small">Praying: ${esc(Object.values(p.prayers).join(", "))}</div>` : ""}
+        ${isDM() && id !== net.uid ? `<div class="actions">${btn("kick", id, ui.kickArm === id ? "Click again to remove" : "Remove from session", "tiny danger")}</div>` : ""}
       </div>`;
     }).join("");
+    const gone = isDM() ? Object.entries(net.kicked || {}) : [];
     return `<div class="panel-head"><h2>Party</h2><span class="sub">${ps.filter(([, p]) => p.online).length} online</span></div>
-      <div class="party">${cards || `<p class="empty">No one has joined yet.</p>`}</div>`;
+      <div class="party">${cards || `<p class="empty">No one has joined yet.</p>`}</div>
+      ${gone.length ? `<div class="kicked-list"><span class="small muted">Removed:</span> ${gone.map(([id, k]) => `<span class="small">${esc((k && k.name) || "Unnamed")}</span> ${btn("unkick", id, "Let back in", "tiny")}`).join(" ")}</div>` : ""}`;
   }
 
   function renderFeedBlock(dm) {
@@ -2321,7 +2535,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     return `<header class="bar"><div class="bar-inner">
         <div class="who"><h1 style="font-size:1.5rem">DM screen</h1><span class="tag">Room <span class="num">${esc(net.code)}</span></span></div>
         <div class="turn"><span class="label">Round</span><span class="turn-count">${m.round || 1}</span>${btn("dm-prev", null, "Undo turn", "", !turnOrder().length || ((m.round || 1) <= 1 && !(m.turn | 0)), ` title="Move the turn back one step"`)}${btn("dm-next", null, "Next turn", "primary", !turnOrder().length)}</div>
-        <div class="actions">${btn("copy-link", null, "Copy invite link")}${btn("rules", null, "Rulebook")}${btn("leave", null, "Leave session")}</div>
+        <div class="actions">${btn("copy-link", null, "Copy invite link")}${btn("rules", null, "Rulebook")}${themePicker()}${btn("leave", null, "Leave session")}</div>
         <span class="status" id="status" data-s="saved">Players join with ${esc(net.code)}</span>
       </div></header>
       <main class="wrap">
@@ -2337,6 +2551,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
   }
 
   function render() {
+    applyTheme();
     const a = document.activeElement;
     const fid = a && a.id ? a.id : null;
     let selS = null, selE = null;
@@ -2520,6 +2735,30 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     },
     "ord-up": arg => moveOrder(toInt(arg), -1),
     "ord-down": arg => moveOrder(toInt(arg), 1),
+    "kick": id => {
+      if (!isDM() || !id || id === net.uid) return;
+      if (ui.kickArm !== id) { ui.kickArm = id; render(); setTimeout(() => { if (ui.kickArm === id) { ui.kickArm = null; render(); } }, 4000); return; }
+      ui.kickArm = null;
+      const name = ((net.players || {})[id] || {}).name || "Unnamed";
+      // Take them out of the turn order first, keeping the current turn where it is
+      const o = turnOrder().slice(), i = o.findIndex(e => e.k === "p" && e.id === id);
+      if (i >= 0) {
+        let t = (net.meta && net.meta.turn) | 0;
+        o.splice(i, 1);
+        if (i < t) t -= 1;
+        if (t >= o.length) t = 0;
+        net.api.setMeta({ order: o.length ? o : null, turn: t, turnId: o[t] ? o[t].id : null });
+      }
+      net.api.kick(id, name)
+        .then(() => { pushShared(`Removed ${name} from the session`, true); toast(`Removed ${name}`); })
+        .catch(() => toast("Couldn't remove them. The database rules need the update that allows removing players"));
+      render();
+    },
+    "unkick": id => {
+      if (!isDM()) return;
+      const name = ((net.kicked || {})[id] || {}).name || "They";
+      net.api.unkick(id).then(() => toast(`${name} can join again with the room code`)).catch(() => toast("Couldn't do that. Check the database rules"));
+    },
     "ord-del": arg => {
       if (!isDM()) return;
       const i = toInt(arg), o = turnOrder().slice();
@@ -3227,6 +3466,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
   let textT = null;
   document.addEventListener("input", e => {
     const el = e.target;
+    if (el.dataset && el.dataset.pref) { writePref(el.dataset.pref, el.value === "class" || el.value === "auto" ? "" : el.value); setTimeout(render, 0); return; }
     if (el.dataset && el.dataset.enspell) { ui.enSpell[el.dataset.enspell] = el.value; return; }
     if (el.dataset && el.dataset.edraft && ui.enDraft) {
       const key = el.dataset.edraft;

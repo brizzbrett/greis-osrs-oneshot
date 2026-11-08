@@ -1,0 +1,46 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "rooms": {
+      "$room": {
+        "meta": {
+          ".read": "auth != null",
+          ".write": "auth != null && (!data.exists() || data.child('dm').val() === auth.uid)",
+          "turn": { ".write": "auth != null && data.parent().child('turnId').val() === auth.uid && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()" },
+          "round": { ".write": "auth != null && data.parent().child('turnId').val() === auth.uid && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()" },
+          "turnId": { ".write": "auth != null && data.val() === auth.uid && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()" }
+        },
+        "players": {
+          ".read": "auth != null && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()",
+          "$uid": { ".write": "auth != null && ((auth.uid === $uid && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()) || (root.child('rooms').child($room).child('meta/dm').val() === auth.uid && !newData.exists()))" }
+        },
+        "kicked": {
+          ".read": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid",
+          ".write": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid",
+          "$uid": { ".read": "auth != null && auth.uid === $uid" }
+        },
+        "log": {
+          ".read": "auth != null && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()",
+          ".write": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid",
+          "$id": { ".write": "auth != null && !data.exists() && newData.child('uid').val() === auth.uid && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()" }
+        },
+        "enemies": {
+          ".read": "auth != null && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()",
+          ".write": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid"
+        },
+        "dm": {
+          ".read": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid",
+          ".write": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid"
+        },
+        "buffs": {
+          ".read": "auth != null && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()",
+          ".write": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid",
+          "$target": {
+            "$id": { ".write": "auth != null && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists() && (auth.uid === $target || (data.exists() ? data.child('from').val() === auth.uid : newData.child('from').val() === auth.uid))" }
+          }
+        }
+      }
+    }
+  }
+}
