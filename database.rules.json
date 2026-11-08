@@ -20,6 +20,10 @@
           ".write": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid",
           "$uid": { ".read": "auth != null && auth.uid === $uid" }
         },
+        "forward": {
+          ".write": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid",
+          "$uid": { ".read": "auth != null && auth.uid === $uid" }
+        },
         "log": {
           ".read": "auth != null && !root.child('rooms').child($room).child('kicked').child(auth.uid).exists()",
           ".write": "auth != null && root.child('rooms').child($room).child('meta/dm').val() === auth.uid",

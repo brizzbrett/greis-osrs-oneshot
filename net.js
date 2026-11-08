@@ -54,6 +54,42 @@ const api = {
     try { return (await get(ref(db, `rooms/${c}/kicked/${uid}`))).exists(); } catch (e) { return false; }
   },
 
+  async roomMeta(c) {
+    return (await get(ref(db, `rooms/${c}/meta`))).val();
+  },
+
+  // Where the DM moved this room to, if this browser was in it at the time. Only that player can read it.
+  async forwardFor(c) {
+    try { return (await get(ref(db, `rooms/${c}/forward/${uid}`))).val(); } catch (e) { return null; }
+  },
+
+  async freeCode() {
+    for (let i = 0; i < 10; i++) {
+      const c = "GREI-" + String(1000 + Math.floor(Math.random() * 9000));
+      if (!(await api.exists(c))) return c;
+    }
+    throw new Error("Couldn't find a free room code");
+  },
+
+  // DM: copy the session to a new code, point each current player at it privately, then close the old code
+  async moveRoom(copy, playerIds) {
+    const old = code, next = await api.freeCode();
+    const meta = Object.assign({}, copy.meta || {}, { dm: uid, created: serverTimestamp(), movedFrom: old });
+    delete meta.closed; delete meta.movedAt;
+    await set(ref(db, `rooms/${next}/meta`), meta);
+    const body = {};
+    for (const k of ["log", "enemies", "dm", "kicked"]) if (copy[k] && Object.keys(copy[k]).length) body[k] = copy[k];
+    if (Object.keys(body).length) await update(ref(db, `rooms/${next}`), body);
+    const fwd = { "meta/closed": true, "meta/movedAt": serverTimestamp() };
+    for (const id of playerIds) fwd[`forward/${id}`] = next;
+    await update(ref(db, `rooms/${old}`), fwd);
+    // Clear the old room's contents; only the closed flag, the removed list and the private pointers stay
+    const clear = { log: null, enemies: null, dm: null, buffs: null };
+    for (const id of playerIds) clear[`players/${id}`] = null;
+    await update(ref(db, `rooms/${old}`), clear).catch(() => {});
+    return next;
+  },
+
   async createRoom() {
     for (let i = 0; i < 10; i++) {
       const c = "GREI-" + String(1000 + Math.floor(Math.random() * 9000));
@@ -77,6 +113,7 @@ const api = {
     if (h.dm) watch(roomRef("dm"), v => h.dm(v));
     if (h.kickedList) watch(roomRef("kicked"), v => h.kickedList(v));
     if (h.kicked) unsubs.push(onValue(roomRef(`kicked/${uid}`), s => h.kicked(s.exists()), () => {}));
+    if (h.forward) unsubs.push(onValue(roomRef(`forward/${uid}`), s => { if (s.val()) h.forward(s.val()); }, () => {}));
   },
 
   // DM: take a player out of the room and keep them out (the rules stop them writing anything)

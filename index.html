@@ -1207,6 +1207,13 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     try { ok = await net.api.exists(code); } catch (e) { toast("Couldn't reach the session server"); render(); return; }
     if (!ok) { toast(`There's no session called ${code}`); if (quiet) clearRoom(); render(); return; }
     if (role !== "dm" && await net.api.isKicked(code)) { toast(`The DM removed you from ${code}`); clearRoom(); render(); return; }
+    let roomMeta = null;
+    try { roomMeta = await net.api.roomMeta(code); } catch (e) {}
+    if (roomMeta && roomMeta.closed) {
+      const next = await net.api.forwardFor(code);
+      if (next && next !== code) { toast(`The DM moved the session to ${next}`); return openRoom(next, role === "dm" ? "player" : role, true); }
+      toast(`${code} has moved to a new code. Ask the DM for it.`); clearRoom(); render(); return;
+    }
     Object.assign(net, { code, role, meta: null, players: {}, log: [], enemies: {}, dm: {}, buffs: {}, kicked: {}, lastPub: "", lastTurnId: null });
     saveRoom();
     net.api.open(code, {
@@ -1231,6 +1238,12 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
       dm: role === "dm" ? v => { net.dm = v || {}; scheduleRender(); } : null,
       kickedList: role === "dm" ? v => { net.kicked = v || {}; scheduleRender(); } : null,
       kicked: role !== "dm" ? gone => { if (gone && net.code === code) kickedOut(); } : null,
+      forward: role !== "dm" ? next => {
+        if (net.code !== code || next === code) return;
+        net.api.dropPresence();
+        toast(`The DM moved the session to ${next}`);
+        openRoom(next, "player", true);
+      } : null,
       error: () => {}
     });
     if (role === "player") publishNow();
@@ -2638,7 +2651,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     return `<header class="bar"><div class="bar-inner">
         <div class="who"><h1 style="font-size:1.5rem">DM screen</h1><span class="tag">Room <span class="num">${esc(net.code)}</span></span></div>
         <div class="turn"><span class="label">Round</span><span class="turn-count">${m.round || 1}</span>${btn("dm-prev", null, "Undo turn", "", !turnOrder().length || ((m.round || 1) <= 1 && !(m.turn | 0)), ` title="Move the turn back one step"`)}${btn("dm-next", null, "Next turn", "primary", !turnOrder().length)}</div>
-        <div class="actions">${btn("copy-link", null, "Copy invite link")}${btn("rules", null, "Rulebook")}${themePicker()}${btn("leave", null, "Leave session")}</div>
+        <div class="actions">${btn("copy-link", null, "Copy invite link")}${btn("new-code", null, ui.newCodeArm ? "Click again for a new code" : "New room code", ui.newCodeArm ? "danger" : "", !!ui.moving, ` title="Move everyone still here to a new code and close this one"`)}${btn("rules", null, "Rulebook")}${themePicker()}${btn("leave", null, "Leave session")}</div>
         <span class="status" id="status" data-s="saved">Players join with ${esc(net.code)}</span>
       </div></header>
       <main class="wrap">
@@ -2801,6 +2814,24 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
       catch (e) { toast("Couldn't start a session. Check your connection."); }
     },
     "leave": () => leaveRoom(),
+    "new-code": async () => {
+      if (!isDM() || ui.moving) return;
+      if (!ui.newCodeArm) { ui.newCodeArm = true; render(); setTimeout(() => { if (ui.newCodeArm) { ui.newCodeArm = false; render(); } }, 4000); return; }
+      ui.newCodeArm = false; ui.moving = true; render();
+      const kicked = net.kicked || {};
+      const playerIds = Object.keys(net.players || {}).filter(id => !kicked[id] && id !== net.uid);
+      const log = Object.fromEntries((net.log || []).map(e => { const { id, ...rest } = e; return [id, rest]; }));
+      const old = net.code;
+      try {
+        const next = await net.api.moveRoom({ meta: net.meta, log, enemies: net.enemies, dm: net.dm, kicked }, playerIds);
+        await openRoom(next, "dm", true);
+        pushShared(`The DM moved the session from ${old} to a new code`, false);
+        toast(`New code ${next}. Everyone still here was moved; ${old} no longer works.`);
+      } catch (e) {
+        toast("Couldn't change the code. The database rules need the update that allows moving rooms");
+      }
+      ui.moving = false; render();
+    },
     "copy-link": () => {
       const link = `${location.origin}${location.pathname}?room=${net.code}`;
       try { navigator.clipboard.writeText(link).then(() => toast("Invite link copied"), () => toast(link)); }
