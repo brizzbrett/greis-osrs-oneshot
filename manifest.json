@@ -4,12 +4,12 @@
   "manifest_version": 1,
   "author": "Brett",
   "homepage_url": "https://github.com/brizzbrett/greis-osrs-oneshot",
-  "icon": "logo.png",
+  "icon": "https://brizzbrett.github.io/greis-osrs-oneshot/logo.png",
   "description": "Character sheets, turn order, shared rolls and a DM screen for Grei's Old School RuneScape-inspired one-shot",
   "action": {
     "title": "Grei's One-Shot Sheet",
-    "icon": "icon.svg",
-    "popover": "index.html",
+    "icon": "https://brizzbrett.github.io/greis-osrs-oneshot/icon.svg",
+    "popover": "https://brizzbrett.github.io/greis-osrs-oneshot/index.html",
     "height": 800,
     "width": 560
   }
