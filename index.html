@@ -1067,7 +1067,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     }).filter(Boolean);
   }
   // Rolls dice like 1d8+3, or a flat amount like 1
-  const rollAmt = expr => (/^\d+$/.test(expr) ? { total: +expr, text: expr } : (r => r && { total: r.total, text: `${expr}: ${r.rolls.join("+")}${r.flat ? fmt(r.flat) : ""}` })(rollDice(expr)));
+  const rollAmt = (expr, crit) => (/^\d+$/.test(expr) ? { total: +expr, text: expr } : (r => r && { total: r.total, text: `${r.expr}: ${r.rolls.join("+")}${r.flat ? fmt(r.flat) : ""}` })(rollDice(expr, crit)));
   const dmgLabel = a => [a.dmg ? `${a.dmg}${a.type ? " " + a.type : ""}` : "", a.plus ? `+ ${a.plus}${a.plusType ? " " + a.plusType : ""}` : ""].filter(Boolean).join(" ");
   // Text for the details list on a card
   const actionText = a => a.k === "attack"
@@ -1431,12 +1431,12 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     return { levelOk: magic >= sp.l, short, ok: magic >= sp.l && short.length === 0 };
   }
 
-  function rollDice(expr) {
+  function rollDice(expr, crit) {
     const m = /^(\d+)d(\d+)([+-]\d+)?$/i.exec(String(expr).replace(/\s/g, ""));
     if (!m) return null;
-    const n = +m[1], s = +m[2], flat = m[3] ? parseInt(m[3], 10) : 0, rolls = [];
+    const n = +m[1] * (crit ? 2 : 1), s = +m[2], flat = m[3] ? parseInt(m[3], 10) : 0, rolls = [];
     for (let i = 0; i < n; i++) rolls.push(d(s));
-    return { rolls, flat, total: rolls.reduce((a, b) => a + b, 0) + flat };
+    return { rolls, flat, total: rolls.reduce((a, b) => a + b, 0) + flat, expr: `${n}d${s}${m[3] || ""}` };
   }
 
   // Initiative: Agility affects it (+1 per 10 points, like every life skill), and Woodsman adds 3
@@ -1461,11 +1461,12 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     const a = d(20), b = o.adv ? d(20) : null;
     const nat = o.adv ? Math.max(a, b) : a;
     const hit = nat + hm + hb - pen;
-    const r = rollDice(o.dice);
+    const crit = nat === 20;
+    const r = rollDice(o.dice, crit);
     let dmg = r.total + dm;
-    const parts = [`${r.rolls.join("+")}${r.flat ? fmt(r.flat) : ""}`];
-    for (const x of o.extra || []) { const e = rollDice(x.dice); dmg += e.total; parts.push(`${e.total} ${x.label}`); }
-    const natNote = nat === 20 ? " (nat 20!)" : nat === 1 ? " (nat 1)" : "";
+    const parts = [`${crit ? r.expr + ": " : ""}${r.rolls.join("+")}${r.flat ? fmt(r.flat) : ""}`];
+    for (const x of o.extra || []) { const e = rollDice(x.dice, crit); dmg += e.total; parts.push(`${e.total} ${x.label}`); }
+    const natNote = crit ? " (nat 20! damage dice doubled)" : nat === 1 ? " (nat 1)" : "";
     const hitTxt = `to hit ${hit}${natNote} [d20 ${o.adv ? `adv ${a}/${b}` : a}${fmt(hm)}${hb ? " " + fmt(hb) : ""}${pen ? ` −${pen} exh` : ""}]`;
     const dmgTxt = `damage ${dmg} [${parts.join(" + ")}${dm ? " " + fmt(dm) : ""}]`;
     return { hit, dmg, nat, text: `${hitTxt}, ${dmgTxt}` };
@@ -2572,9 +2573,9 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
       const en = enemyPub(arg), pv = ((net.dm && net.dm.enemies) || {})[arg] || {};
       if (!isDM() || !en || pv.atk === null || pv.atk === undefined) return;
       const r = d(20), hit = r + (pv.atk | 0);
-      const dmg = pv.dmg ? rollDice(pv.dmg) : null;
-      const nat = r === 20 ? " (nat 20!)" : r === 1 ? " (nat 1)" : "";
-      const dmgTxt = dmg ? `, ${dmg.total} damage [${pv.dmg}: ${dmg.rolls.join("+")}${dmg.flat ? fmt(dmg.flat) : ""}]` : "";
+      const dmg = pv.dmg ? rollDice(pv.dmg, r === 20) : null;
+      const nat = r === 20 ? " (nat 20! damage dice doubled)" : r === 1 ? " (nat 1)" : "";
+      const dmgTxt = dmg ? `, ${dmg.total} damage [${dmg.expr}: ${dmg.rolls.join("+")}${dmg.flat ? fmt(dmg.flat) : ""}]` : "";
       ui.dmLast = { label: `${en.name} attacks`, detail: `${hit} to hit${nat} [d20 ${r}${fmt(pv.atk | 0)}]${dmg ? " · damage" : ""} =`, total: dmg ? dmg.total : hit };
       pushShared(`${en.name} attacks: ${hit} to hit${nat} [d20 ${r}${fmt(pv.atk | 0)}]${dmgTxt}`, ui.dmSecret);
       render();
@@ -2671,9 +2672,9 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
       if (sp.d) {
         const adv = sp.n === "Magic Dart";
         const a = d(20), b = adv ? d(20) : null, r = adv ? Math.max(a, b) : a, hit = r + m;
-        const dm = rollDice(sp.d), dmg = dm.total + m;
-        const nat = r === 20 ? " (nat 20!)" : r === 1 ? " (nat 1)" : "";
-        parts.push(`${hit} to hit${nat} [d20 ${adv ? `adv ${a}/${b}` : r}${fmt(m)}]`, `${dmg} damage [${sp.d}: ${dm.rolls.join("+")}${fmt(m)}]`);
+        const dm = rollDice(sp.d, r === 20), dmg = dm.total + m;
+        const nat = r === 20 ? " (nat 20! damage dice doubled)" : r === 1 ? " (nat 1)" : "";
+        parts.push(`${hit} to hit${nat} [d20 ${adv ? `adv ${a}/${b}` : r}${fmt(m)}]`, `${dmg} damage [${dm.expr}: ${dm.rolls.join("+")}${fmt(m)}]`);
         detail = `${hit} to hit${nat} · damage =`; total = dmg;
       }
       if (sp.fx && sp.fx !== "Damage only") parts.push(sp.fx);
@@ -2687,15 +2688,16 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
       const a = Array.isArray(pv.actions) ? pv.actions[toInt(ix)] : null;
       if (!isDM() || !en || !a) return;
       const parts = [];
-      let total = null, detail = "";
+      let total = null, detail = "", crit = false;
       if (a.k === "attack") {
         const r = d(20), hit = r + (a.hit | 0);
-        const nat = r === 20 ? " (nat 20!)" : r === 1 ? " (nat 1)" : "";
+        crit = r === 20;
+        const nat = crit ? " (nat 20! damage dice doubled)" : r === 1 ? " (nat 1)" : "";
         parts.push(`${hit} to hit${nat} [d20 ${r}${fmt(a.hit | 0)}]`);
         detail = `${hit} to hit${nat}`;
         total = hit;
       }
-      const main = a.dmg ? rollAmt(a.dmg) : null, plus = a.plus ? rollAmt(a.plus) : null;
+      const main = a.dmg ? rollAmt(a.dmg, crit) : null, plus = a.plus ? rollAmt(a.plus, crit) : null;
       if (main) parts.push(`${main.total} ${a.type || "damage"} [${main.text}]`);
       if (plus) parts.push(`+ ${plus.total} ${a.plusType || ""} [${plus.text}]`.trim());
       if (main) { const sum = main.total + (plus ? plus.total : 0); detail += `${detail ? " · " : ""}damage${plus ? " (both parts)" : ""}`; total = sum; }
@@ -3267,6 +3269,7 @@ mark { background: color-mix(in srgb, var(--spec) 35%, transparent); color: inhe
     ["How does exhaustion work?", "Like D&D 2024: each level gives −2 to every d20 roll and −5 ft speed, and level 6 is death. It doesn't affect AC. A long rest clears it."],
     ["What's my speed?", "30 ft. Each platebody or platelegs piece takes off 5 ft (both together is −10 ft), and so does each level of exhaustion."],
     ["What happens at 0 HP?", "You make D&D death saves."],
+    ["What happens on a natural 20?", "It's a critical hit: roll double the damage dice and add your modifiers once, so 1d6+3 becomes 2d6+3. Extra dice like Blood for Bandos, Cleave or poison are doubled too. The sheet does this for you, and it works the same for enemies."],
     ["What does bloodied mean?", "An enemy at half HP or less, or whenever the DM says so. It matters for Blood for Bandos."],
     ["What do I start with?", "Prayer points equal to your Prayer level, and 100% special attack energy."],
     ["Do level boosts unlock higher spells?", "Yes. Boost, potions and amulets unlock spells while they last, and they stack: Boost + a magic potion is +30 Magic."],
